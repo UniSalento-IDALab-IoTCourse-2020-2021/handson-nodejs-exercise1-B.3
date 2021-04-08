@@ -19,17 +19,17 @@ app.post("/temperature", (req, res, next) => {
     var timestamp = req.body.timestamp;
     var sensor = req.body.sensor;
 
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
     async function run() {
 
-       try {
+        try {
 
             await client.connect();
 
             const database = client.db("TemperatureDB");
             const temperatureColl = database.collection("temperature");
             // create a document to be inserted
- const doc = {
+            const doc = {
                 value: temperature,
                 timestamp: timestamp,
                 sensorId: sensor,
@@ -42,6 +42,7 @@ app.post("/temperature", (req, res, next) => {
             await client.close();
         }
     }
+
     run().catch(console.dir);
     res.sendStatus(200)
 });
